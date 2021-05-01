@@ -1,0 +1,85 @@
+{
+	"name": "php-ide",
+	"displayName": "php-ide",
+	"description": "blank for now",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.55.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:php"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+                "command": "php-ide.fix",
+                "title": "PHP IDE: Run php-cs-fixer fix"
+            }
+		],
+		"configuration": {
+            "title": "PHP IDE",
+            "type": "object",
+            "properties": {
+                "PHP IDE - php-cs-fixer.toolPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "The path to the php-cs-fixer tool"
+                },
+                "PHP IDE - php-cs-fixer.useCache": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Use a cache file when fixing files (--using-cache)"
+                },
+                "PHP IDE - php-cs-fixer.allowRisky": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Are risky fixers allowed (--allow-risky)"
+                },
+                "PHP IDE - php-cs-fixer.config": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Path to a .php_cs file (--config)"
+                },
+                "PHP IDE - php-cs-fixer.rules": {
+                    "type": "string",
+                    "default": "@PSR1,@PSR2,@Symfony,-yoda_style",
+                    "description": "Rules to use when fixing files (--rules)"
+                },
+                "PHP IDE - php-cs-fixer.fixOnSave": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Runs fix command on save"
+                }
+            }
+        }
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.4",
+		"@types/node": "^12.20.11",
+		"@types/tmp": "^0.2.0",
+		"@types/vscode": "^1.55.0",
+		"@typescript-eslint/eslint-plugin": "^4.14.1",
+		"@typescript-eslint/parser": "^4.14.1",
+		"eslint": "^7.19.0",
+		"glob": "^7.1.6",
+		"mocha": "^8.2.1",
+		"typescript": "^4.1.3",
+		"vscode-test": "^1.5.0"
+	},
+	"dependencies": {
+		"tmp": "^0.2.1"
+	}
+}
