@@ -12,13 +12,9 @@ Make sure your code automatically matches standarts both in PHP-FIG and in anoth
 
 ## Requirements
 
-PHP installed and included in PATH.
+PHP 5.6+ installed and included in PATH.
 
 ## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
 
 This extension contributes the following settings:
 
@@ -31,9 +27,7 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 0.1.0
-
-Initial Release
+[CHANGELOG.md](CHANGELOG.md)
 
 ## Projects used in this extension
 
