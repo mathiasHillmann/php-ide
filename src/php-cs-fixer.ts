@@ -17,7 +17,7 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
   let opts = { cwd: path.dirname(filename) };
 
   if (toolPath === "") {
-    let extensionPath = vscode.extensions.getExtension("mhillmann.php-ide") ?? path.join(__dirname, "..");
+    let extensionPath = vscode.extensions.getExtension("mhillmann.php-ide")?.extensionPath ?? path.join(__dirname, "..");
     toolPath = path.normalize(`${extensionPath}/tools/php-cs-fixer`);
   }
 
