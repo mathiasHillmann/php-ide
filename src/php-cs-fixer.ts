@@ -63,8 +63,6 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
 
   return new Promise<string>(function (resolve) {
     cp.execFile("php", [...args, tmpFile.name], opts, function (err: ExecException | null, stdout: string, stderr: string) {
-      console.log(tmpFile.name);
-      console.log([tmpFile.name, stdout, stderr]);
       if (err) {
         tmpFile.removeCallback();
         throw new Error(`${err.message}: ${stderr}`);
