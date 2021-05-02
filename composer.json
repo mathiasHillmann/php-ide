@@ -1,5 +1,5 @@
 {
-    "name": "hillmann/php-ide",
+    "name": "mhillmann/php-ide",
     "type": "extension",
     "require": {
         "phan/phan": "^4.0",
