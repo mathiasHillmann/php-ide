@@ -6,7 +6,7 @@ Overcharge your Vscode and turn it into a proper PHP IDE.
 
 ### Php-CS-Fixer
 
-Make sure your code automatically matches standarts both in PHP-FIG and in another frameworks by automatically using `php-cs-fixer fix` every time you save your files
+Make sure your code automatically matches standards both in PHP-FIG and in any framework that has published a rule set to follow by automatically using `php-cs-fixer fix` every time you save your files
 
 ![php-cs-fixer in action](readme/php-cs-fixer.gif?raw=true "php-cs-fixer in action")
 
