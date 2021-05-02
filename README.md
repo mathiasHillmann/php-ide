@@ -29,10 +29,6 @@ This extension contributes the following settings:
 * `php-cs-fixer.rules`: Rules to be used for formatting your PHP file. Default: "@PSR1,@PSR2,@Symfony,-yoda_style". List of possible rules: [Link](https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.18/doc/ruleSets/index.rst)
 * `php-cs-fixer.fixOnSave`: Whether to use `php-cs-fixer` when you save your file. Default: `true`
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
 ## Release Notes
 
 ### 0.1.0
