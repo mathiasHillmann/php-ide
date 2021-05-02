@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { formatDocument } from "./php-cs-fixer";
+import { formatDocument } from "./php-cs-fixer/php-cs-fixer";
 import { getConfig } from "./utils";
 
 function registerDocumentProvider(document: vscode.TextDocument, options: vscode.FormattingOptions) {

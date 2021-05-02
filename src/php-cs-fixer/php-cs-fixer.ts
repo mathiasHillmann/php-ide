@@ -4,7 +4,7 @@ import * as fs from "fs";
 import * as tmp from "tmp";
 import * as cp from "child_process";
 import { ExecException } from "node:child_process";
-import { getConfig } from "./utils";
+import { getConfig, getExtensionPath } from "../utils";
 
 export function formatDocument(document: vscode.TextDocument): Promise<string> {
   if (document.languageId !== "php") {
@@ -17,8 +17,7 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
   let opts = { cwd: path.dirname(filename) };
 
   if (toolPath === "") {
-    let extensionPath = vscode.extensions.getExtension("mhillmann.php-ide")?.extensionPath ?? path.join(__dirname, "..");
-    toolPath = path.normalize(`${extensionPath}/tools/php-cs-fixer`);
+    toolPath = path.normalize(`${getExtensionPath()}/tools/php-cs-fixer`);
   }
 
   args.push(toolPath);
