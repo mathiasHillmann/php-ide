@@ -6,15 +6,20 @@ import { getConfig } from "./utils";
 
 function registerDocumentProvider(document: vscode.TextDocument, options: vscode.FormattingOptions) {
   return new Promise<vscode.TextEdit[]>(function (resolve, reject) {
-    formatDocument(document)
-      .then(function (text: string) {
-        const range = new vscode.Range(new vscode.Position(0, 0), document.lineAt(document.lineCount - 1).range.end);
-        resolve([new vscode.TextEdit(range, text)]);
-      })
-      .catch(function (err) {
-        vscode.window.showErrorMessage(err);
-        reject();
-      });
+    try {
+      formatDocument(document)
+        .then(function (text: string) {
+          const range = new vscode.Range(new vscode.Position(0, 0), document.lineAt(document.lineCount - 1).range.end);
+          resolve([new vscode.TextEdit(range, text)]);
+        })
+        .catch(function (err: Error) {
+          vscode.window.showErrorMessage(err.message);
+          reject();
+        });
+    } catch (err) {
+      console.error(err);
+      vscode.window.showErrorMessage(err);
+    }
   });
 }
 

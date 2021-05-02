@@ -2,7 +2,6 @@
     "name": "hillmann/php-ide",
     "type": "extension",
     "require": {
-        "friendsofphp/php-cs-fixer": "^2.18",
         "phan/phan": "^4.0",
         "vimeo/psalm": "^4.7",
         "phpstan/phpstan": "^0.12.85",
