@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
@@ -16,7 +16,7 @@
 		"Formatters"
 	],
 	"galleryBanner": {
-		"color": "#C80000",
+		"color": "#1e1e1e",
 		"theme": "dark"
 	},
 	"keywords": [

@@ -13,7 +13,11 @@ Fixed the extension path when running the extension
 * Removed unnecessary changelogs
 * Fixed readme.md
 
-## 0.1.2
+## 0.1.3
 
 * Added Icon
 * Added some metadata on package.json
+
+## 0.1.4
+
+* Changed banner color
