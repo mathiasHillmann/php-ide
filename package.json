@@ -3,15 +3,26 @@
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
 	"version": "0.1.2",
+	"license": "SEE LICENSE IN LICENSE.md",
+	"icon": "images/icon.png",
 	"engines": {
 		"vscode": "^1.55.0"
 	},
 	"publisher": "mhillmann",
 	"author": {
-		"name": "seanmcbreen"
+		"name": "Mathias Hillmann"
 	},
 	"categories": [
-		"Other"
+		"Formatters"
+	],
+	"galleryBanner": {
+		"color": "#C80000",
+		"theme": "dark"
+	},
+	"keywords": [
+		"PHP",
+		"Code Sniffer",
+		"IDE"
 	],
 	"activationEvents": [
 		"onLanguage:php"

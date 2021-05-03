@@ -8,7 +8,7 @@ Overcharge your Vscode and turn it into a proper PHP IDE.
 
 Make sure your code automatically matches standards both in PHP-FIG and in any framework that has published a rule set to follow by automatically using `php-cs-fixer fix` every time you save your files
 
-![php-cs-fixer in action](readme/php-cs-fixer.gif?raw=true "php-cs-fixer in action")
+![php-cs-fixer in action](images/php-cs-fixer.gif?raw=true "php-cs-fixer in action")
 
 ## Requirements
 
