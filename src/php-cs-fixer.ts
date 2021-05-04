@@ -17,7 +17,7 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
   let opts = { cwd: path.dirname(filename) };
 
   if (toolPath === "") {
-    let extensionPath = vscode.extensions.getExtension("mhillmann.php-ide")?.extensionPath ?? path.join(__dirname, "..");
+    let extensionPath = path.join(__dirname, "..");
     toolPath = path.normalize(`${extensionPath}/tools/php-cs-fixer`);
   }
 
@@ -64,6 +64,7 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
   return new Promise<string>(function (resolve) {
     cp.execFile("php", [...args, tmpFile.name], opts, function (err: ExecException | null, stdout: string, stderr: string) {
       if (err) {
+        console.log([err, stdout, stderr]);
         tmpFile.removeCallback();
         throw new Error(`${err.message}: ${stderr}`);
       }

@@ -17,7 +17,7 @@ function registerDocumentProvider(document: vscode.TextDocument, options: vscode
           reject();
         });
     } catch (err) {
-      console.error(err);
+      console.log(err);
       vscode.window.showErrorMessage(err);
     }
   });
