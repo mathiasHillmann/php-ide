@@ -29,3 +29,7 @@ Fixed the extension path when running the extension
 ## 0.1.6
 
 * Attempt at fixing #1
+
+## 0.1.7
+
+* added .cache file to .vscodeignore
