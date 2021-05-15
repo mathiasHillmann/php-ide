@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
@@ -39,32 +39,22 @@
 			"title": "PHP IDE",
 			"type": "object",
 			"properties": {
-				"PHP IDE - php-cs-fixer.toolPath": {
+				"php-ide.php-cs-fixer.toolPath": {
 					"type": "string",
 					"default": "",
 					"description": "The path to the php-cs-fixer tool"
 				},
-				"PHP IDE - php-cs-fixer.useCache": {
-					"type": "boolean",
-					"default": false,
-					"description": "Use a cache file when fixing files (--using-cache)"
-				},
-				"PHP IDE - php-cs-fixer.allowRisky": {
-					"type": "boolean",
-					"default": false,
-					"description": "Are risky fixers allowed (--allow-risky)"
-				},
-				"PHP IDE - php-cs-fixer.config": {
+				"php-ide.php-cs-fixer.config": {
 					"type": "string",
 					"default": "",
 					"description": "Path to a .php_cs file (--config)"
 				},
-				"PHP IDE - php-cs-fixer.rules": {
+				"php-ide.php-cs.rules": {
 					"type": "string",
-					"default": "@PSR1,@PSR2,@Symfony,-yoda_style",
+					"default": "@PSR1,@PSR2",
 					"description": "Rules to use when fixing files (--rules)"
 				},
-				"PHP IDE - php-cs-fixer.fixOnSave": {
+				"php-ide.php-cs-fixer.fixOnSave": {
 					"type": "boolean",
 					"default": true,
 					"description": "Runs fix command on save"
@@ -79,10 +69,7 @@
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js",
-    	"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
-    	"esbuild": "npm run -S esbuild-base -- --sourcemap",
-    	"esbuild-watch": "npm run -S esbuild-base -- --sourcemap --watch",
-    	"test-compile": "tsc -p ./"
+    	"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",

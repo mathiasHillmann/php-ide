@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { formatDocument } from "./php-cs-fixer";
+import { formatDocument } from "./php-cs-fixer/php-cs-fixer";
 import { getConfig } from "./utils";
 
 function registerDocumentProvider(document: vscode.TextDocument, options: vscode.FormattingOptions) {
@@ -26,6 +26,9 @@ function registerDocumentProvider(document: vscode.TextDocument, options: vscode
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  /*
+   *  php-cs-fixer
+   */
   context.subscriptions.push(
     vscode.commands.registerTextEditorCommand("php-ide.fix", function (textEditor) {
       vscode.commands.executeCommand("editor.action.formatDocument");

@@ -4,35 +4,27 @@ import * as fs from "fs";
 import * as tmp from "tmp";
 import * as cp from "child_process";
 import { ExecException } from "node:child_process";
-import { getConfig } from "./utils";
+import { getConfig, getExtensionPath } from "../utils";
 
 export function formatDocument(document: vscode.TextDocument): Promise<string> {
   if (document.languageId !== "php") {
     throw new Error("This command requires that the language is PHP.");
   }
 
-  let toolPath: string = getConfig("toolPath");
+  let toolPath: string = getConfig("php-cs-fixer.toolPath");
   let filename = document.fileName;
   let args: Array<string> = [];
   let opts = { cwd: path.dirname(filename) };
 
   if (toolPath === "") {
-    let extensionPath = path.join(__dirname, "..");
-    toolPath = path.normalize(`${extensionPath}/tools/php-cs-fixer`);
+    toolPath = path.normalize(`${getExtensionPath()}/tools/php-cs-fixer`);
   }
 
   args.push(toolPath);
   args.push("fix");
+  args.push("--using-cache=no");
 
-  if (!getConfig("useCache")) {
-    args.push("--using-cache=no");
-  }
-
-  if (getConfig("allowRisky")) {
-    args.push("--allow-risky=yes");
-  }
-
-  let config = getConfig("config");
+  let config = getConfig("php-cs-fixer.config");
   if (config) {
     // Support config file with relative path
     if (!path.isAbsolute(config)) {
@@ -52,7 +44,7 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
 
     args.push("--config=" + config);
   } else {
-    let rules = getConfig("rules");
+    let rules = getConfig("php-cs.rules");
     if (rules) {
       args.push("--rules=" + rules);
     }

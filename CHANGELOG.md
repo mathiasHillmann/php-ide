@@ -33,3 +33,7 @@ Fixed the extension path when running the extension
 ## 0.1.7
 
 * added .cache file to .vscodeignore
+
+## 0.1.8
+
+* Fixed the fact that the extension completely ignored any settings.
