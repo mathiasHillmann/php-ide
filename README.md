@@ -4,11 +4,20 @@ Overcharge your Vscode and turn it into a proper PHP IDE.
 
 ## Features
 
+* Php-CS-fixer
+* PHPDoc
+
 ### Php-CS-Fixer
 
 Make sure your code automatically matches standards both in PHP-FIG and in any framework that has published a rule set to follow by automatically using `php-cs-fixer fix` every time you save your files
 
 ![php-cs-fixer in action](images/php-cs-fixer.gif?raw=true "php-cs-fixer in action")
+
+### PHPDoc
+
+Document functions, variables and classes in a single click
+
+![phpdoc in action](images/phpdoc.gif?raw=true "phpdoc in action")
 
 ## Requirements
 
@@ -16,19 +25,14 @@ PHP 5.6+ installed and included in PATH.
 
 ## Extension Settings
 
-This extension contributes the following settings:
-
-* `php-cs-fixer.toolPath`: The path to a local `php-cs-fixer` tool not included by the extension in case you want to use it locally. Default: ""
-* `php-cs-fixer.useCache`: Whether to use cache when running `php-cs-fixer` or not. Default: `false`
-* `php-cs-fixer.allowRisky`: Whether `php-cs-fixer` is allowed risky fixes or not. Default: `false`
-* `php-cs-fixer.config`: Path to a local .php_cs file. Default: ""
-* `php-cs-fixer.rules`: Rules to be used for formatting your PHP file. Default: "@PSR1,@PSR2,@Symfony,-yoda_style". List of possible rules: [Link](https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.18/doc/ruleSets/index.rst)
-* `php-cs-fixer.fixOnSave`: Whether to use `php-cs-fixer` when you save your file. Default: `true`
+[Check the wiki for more info on settings of this extension.](https://github.com/mathiasHillmann/php-ide/wiki)
 
 ## Release Notes
 
 [CHANGELOG.md](CHANGELOG.md)
 
-## Projects used in this extension
+## Projects used and based on in this extension
 
+* [vscode-php-cs-fixer](https://github.com/fterrag/vscode-php-cs-fixer)
 * [FriendsOfPHP/PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+* [phpdoc-comment-vscode-plugin](https://github.com/shishirui/phpdoc-comment-vscode-plugin)

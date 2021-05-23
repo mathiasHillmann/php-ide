@@ -4,27 +4,27 @@ import * as fs from "fs";
 import * as tmp from "tmp";
 import * as cp from "child_process";
 import { ExecException } from "node:child_process";
-import { getConfig, getExtensionPath } from "../utils";
+import * as utils from "../utils";
 
 export function formatDocument(document: vscode.TextDocument): Promise<string> {
   if (document.languageId !== "php") {
     throw new Error("This command requires that the language is PHP.");
   }
 
-  let toolPath: string = getConfig("php-cs-fixer.toolPath");
+  let toolPath: string = utils.getConfig("php-cs-fixer.toolPath");
   let filename = document.fileName;
   let args: Array<string> = [];
   let opts = { cwd: path.dirname(filename) };
 
   if (toolPath === "") {
-    toolPath = path.normalize(`${getExtensionPath()}/tools/php-cs-fixer`);
+    toolPath = path.normalize(`${utils.getExtensionPath()}/tools/php-cs-fixer`);
   }
 
   args.push(toolPath);
   args.push("fix");
   args.push("--using-cache=no");
 
-  let config = getConfig("php-cs-fixer.config");
+  let config = utils.getConfig("php-cs-fixer.config");
   if (config) {
     // Support config file with relative path
     if (!path.isAbsolute(config)) {
@@ -44,7 +44,7 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
 
     args.push("--config=" + config);
   } else {
-    let rules = getConfig("php-cs.rules");
+    let rules = utils.getConfig("php-cs.rules");
     if (rules) {
       args.push("--rules=" + rules);
     }

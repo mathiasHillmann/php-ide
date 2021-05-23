@@ -37,3 +37,7 @@ Fixed the extension path when running the extension
 ## 0.1.8
 
 * Fixed the fact that the extension completely ignored any settings.
+
+## 0.2.0
+
+* Added PHPDoc to the extension.
