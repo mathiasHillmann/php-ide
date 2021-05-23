@@ -2,7 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { formatDocument } from "./php-cs-fixer/php-cs-fixer";
-import { getConfig } from "./utils";
+import { phpDoc } from "./phpdoc/phpdoc";
+import * as utils from "./utils";
 
 function registerDocumentProvider(document: vscode.TextDocument, options: vscode.FormattingOptions) {
   return new Promise<vscode.TextEdit[]>(function (resolve, reject) {
@@ -29,27 +30,40 @@ export function activate(context: vscode.ExtensionContext) {
   /*
    *  php-cs-fixer
    */
-  context.subscriptions.push(
-    vscode.commands.registerTextEditorCommand("php-ide.fix", function (textEditor) {
-      vscode.commands.executeCommand("editor.action.formatDocument");
-    })
-  );
 
-  context.subscriptions.push(
-    vscode.workspace.onWillSaveTextDocument(function (event) {
-      if (event.document.languageId === "php" && getConfig("fixOnSave") && vscode.workspace.getConfiguration("editor", null).get("formatOnSave") === false) {
-        event.waitUntil(vscode.commands.executeCommand("editor.action.formatDocument"));
+  const fixCommand = vscode.commands.registerTextEditorCommand("php-ide.fix", function (textEditor) {
+    vscode.commands.executeCommand("editor.action.formatDocument");
+  });
+
+  const fixOnSave = vscode.workspace.onWillSaveTextDocument(function (event) {
+    if (
+      event.document.languageId === "php" &&
+      utils.getConfig("fixOnSave") &&
+      vscode.workspace.getConfiguration("editor", null).get("formatOnSave") === false
+    ) {
+      event.waitUntil(vscode.commands.executeCommand("editor.action.formatDocument"));
+    }
+  });
+
+  const fixFormatter = vscode.languages.registerDocumentFormattingEditProvider("php", {
+    provideDocumentFormattingEdits: function (document: vscode.TextDocument, options: vscode.FormattingOptions) {
+      return registerDocumentProvider(document, options);
+    },
+  });
+
+  const phpDocCommand = vscode.commands.registerCommand("php-ide.addPhpDoc", function () {
+    if (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document.languageId === "php") {
+      try {
+        phpDoc(vscode.window.activeTextEditor);
+      } catch (err) {
+        console.log(err);
+        vscode.window.showErrorMessage(err);
       }
-    })
-  );
+    }
+  });
 
-  context.subscriptions.push(
-    vscode.languages.registerDocumentFormattingEditProvider("php", {
-      provideDocumentFormattingEdits: function (document: vscode.TextDocument, options: vscode.FormattingOptions) {
-        return registerDocumentProvider(document, options);
-      },
-    })
-  );
+  // Pushing extension stuff to vscode.
+  context.subscriptions.push(fixCommand, fixOnSave, fixFormatter, phpDocCommand);
 }
 
 // this method is called when your extension is deactivated

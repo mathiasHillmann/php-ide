@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.1.8",
+	"version": "0.2.0",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
@@ -33,8 +33,19 @@
 			{
 				"command": "php-ide.fix",
 				"title": "PHP IDE: Run php-cs-fixer fix"
+			},
+			{
+				"command": "php-ide.addPhpDoc",
+				"title": "PHP IDE: Add PHPDoc Comment"
 			}
 		],
+		"menus": {
+            "editor/context": [{
+                "when": "resourceLangId == php",
+                "command": "php-ide.addPhpDoc",
+                "group": "1_modification"
+            }]
+        },
 		"configuration": {
 			"title": "PHP IDE",
 			"type": "object",
