@@ -10,10 +10,6 @@ export function getExtensionPath(): string {
   return path.join(__dirname, "..");
 }
 
-export function splitLine(line: string): Array<string> {
-  return line.split(" ").filter((a) => a !== "");
-}
-
 export function wordCount(line: string): Number {
   return line.split(" ").filter((a) => a !== "").length;
 }

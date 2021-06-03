@@ -15,8 +15,7 @@ export function phpDoc(editor: vscode.TextEditor) {
 
   // Prepare PHPDoc
   switch (true) {
-    // final|abstract static function getA (int $a): number
-    case /(final|abstract)\s+(function)\s+([\w_-]+)+/g.test(target):
+    case /(function)+/g.test(target):
       /**
        *  FunctionName
        *
@@ -25,137 +24,52 @@ export function phpDoc(editor: vscode.TextEditor) {
        *
        *  @return String
        */
-      let typedStaticFunctionFiltered = utils.splitLine(target);
-      let typedStaticParamsFiltered = utils.splitLineComma(target.substring(target.indexOf("(") + 1, target.indexOf(")")));
-      phpdoc += `\n/**`;
-      phpdoc += `\n * Static ${utils.clearSpecialCharacters(typedStaticFunctionFiltered[4].substring(0, typedStaticFunctionFiltered[4].indexOf("(")))}`;
-      phpdoc += `\n *`;
-      typedStaticParamsFiltered.forEach((element) => {
-        phpdoc += `\n * @param ${utils.wordCount(element) > 1 ? element.trim() : " mixed " + element.trim()}`;
-      });
-      if (typedStaticParamsFiltered.length !== 0) {
-        phpdoc += `\n *`;
-      }
-      phpdoc += `\n * @return ${/(\:)\s+([\w_-]+)+/g.exec(target)![2] ?? "mixed"}`;
-      phpdoc += `\n */`;
-      break;
-
-    // final|abstract function getA (int $a): number
-    case /(final|abstract)\s+(function)\s+([\w_-]+)+/g.test(target):
-      /**
-       *  FunctionName
-       *
-       *  @param type ParamName
-       *  @param type ParamName
-       *
-       *  @return String
-       */
-      let typedFunctionFiltered = utils.splitLine(target);
-      let typedParamsFiltered = utils.splitLineComma(target.substring(target.indexOf("(") + 1, target.indexOf(")")));
-      phpdoc += `\n/**`;
-      phpdoc += `\n * Static ${utils.clearSpecialCharacters(typedFunctionFiltered[3].substring(0, typedFunctionFiltered[3].indexOf("(")))}`;
-      phpdoc += `\n *`;
-      typedParamsFiltered.forEach((element) => {
-        phpdoc += `\n * @param ${utils.wordCount(element) > 1 ? element.trim() : " mixed " + element.trim()}`;
-      });
-      if (typedParamsFiltered.length !== 0) {
-        phpdoc += `\n *`;
-      }
-      phpdoc += `\n * @return ${/(\:)\s+([\w_-]+)+/g.exec(target)![2] ?? "mixed"}`;
-      phpdoc += `\n */`;
-      break;
-
-    // static function getA (int $a): number
-    case /(static)\s+(function)\s+([\w_-]+)+/g.test(target):
-      /**
-       *  FunctionName
-       *
-       *  @param type ParamName
-       *  @param type ParamName
-       *
-       *  @return String
-       */
-      let staticFunctionFiltered = utils.splitLine(target);
-      let staticParamsFiltered = utils.splitLineComma(target.substring(target.indexOf("(") + 1, target.indexOf(")")));
-      phpdoc += `\n/**`;
-      phpdoc += `\n * Static ${utils.clearSpecialCharacters(staticFunctionFiltered[3].substring(0, staticFunctionFiltered[3].indexOf("(")))}`;
-      phpdoc += `\n *`;
-      staticParamsFiltered.forEach((element) => {
-        phpdoc += `\n * @param ${utils.wordCount(element) > 1 ? element.trim() : " mixed " + element.trim()}`;
-      });
-      if (staticParamsFiltered.length !== 0) {
-        phpdoc += `\n *`;
-      }
-      phpdoc += `\n * @return ${/(\:)\s+([\w_-]+)+/g.exec(target)![2] ?? "mixed"}`;
-      phpdoc += `\n */`;
-      break;
-
-    // function getA (int $a): number
-    case /function\s+([\w_-]+)+/g.test(target):
-      /**
-       *  FunctionName
-       *
-       *  @param type ParamName
-       *  @param type ParamName
-       *
-       *  @return String
-       */
-      let functionFiltered = utils.splitLine(target);
+      let functionName: RegExpMatchArray | null = target.match(/function\s+([\w_-]+)+/);
+      let functionReturn: RegExpMatchArray | null = target.match(/\:\s+([\w_-]+)+/);
       let paramsFiltered = utils.splitLineComma(target.substring(target.indexOf("(") + 1, target.indexOf(")")));
       phpdoc += `\n/**`;
-      phpdoc += `\n * ${utils.clearSpecialCharacters(functionFiltered[2].substring(0, functionFiltered[2].indexOf("(")))}`;
+      phpdoc += `\n * ${utils.clearSpecialCharacters(functionName ? functionName[1] : "mixed")}`;
       phpdoc += `\n *`;
       paramsFiltered.forEach((element) => {
-        phpdoc += `\n * @param ${utils.wordCount(element) > 1 ? element.trim() : " mixed " + element.trim()}`;
+        phpdoc += `\n * @param ${utils.wordCount(element) > 1 ? element.trim() : "mixed " + element.trim()}`;
       });
       if (paramsFiltered.length !== 0) {
         phpdoc += `\n *`;
       }
-      phpdoc += `\n * @return ${/(\:)\s+([\w_-]+)+/g.exec(target)![2] ?? "mixed"}`;
+      phpdoc += `\n * @return ${functionReturn ? functionReturn[1] : "void"}`;
       phpdoc += `\n */`;
       break;
 
-    // private int $a = 2;
-    case /(public|private|protected|var)\s+([^\s]+)\s+(\$|[\w_-])([\w_-]+)\s+\=+/g.test(target):
+    case /(const)+/g.test(target):
+      /**
+       * @var mixed ConstName
+       */
+      let constName: RegExpMatchArray | null = target.match(/([\w_-]+)\s+\=+/);
+      phpdoc = `\n/**`;
+      phpdoc += `\n * @var mixed ${constName ? constName[1] : "unnamed"}`;
+      phpdoc += `\n */`;
+      break;
+
+    case /(public|private|protected|var)+/g.test(target):
       /**
        * @var type VarName
        */
-      let typedVarFiltered = utils.splitLine(target);
+      let varType: RegExpMatchArray | null = target.match(/([\w_-]+)\s+\$[\w_-]+/);
+      let varName: RegExpMatchArray | null = target.match(/(\$[\w_-])+/);
       phpdoc = `\n/**`;
-      phpdoc += `\n * @var ${typedVarFiltered[1]} ${typedVarFiltered[2]}`;
+      phpdoc += `\n * @var ${!varType ? "mixed" : /(public|private|protected|var)+/g.test(varType[1]) ? "mixed" : varType[1]} ${
+        varName ? varName[1] : "unnamed"
+      }`;
       phpdoc += `\n */`;
       break;
 
-    // private $a = 2;
-    case /(public|private|protected|var)\s+(\$|[\w_-])([\w_-]+)\s+\=+/g.test(target):
-      /**
-       * @var VarName
-       */
-      let varFiltered = utils.splitLine(target);
-      phpdoc = `\n/**`;
-      phpdoc += `\n * @var ${varFiltered[1]}`;
-      phpdoc += `\n */`;
-      break;
-
-    // abstract class ClassB | final class ClassC
-    case /(abstract|final)\s+(class|enum|interface)\s+([\w_-]+)+/g.test(target):
-      /**
-       * abstract|final ClassName
-       */
-      let typedClassFiltered = utils.splitLine(target);
-      phpdoc = `\n/**`;
-      phpdoc += `\n * ${typedClassFiltered[0]} ${utils.clearSpecialCharacters(typedClassFiltered[2])}`;
-      phpdoc += `\n */`;
-      break;
-
-    // class ClassA {
-    case /(class|enum|interface)\s+([\w_-]+)+/g.test(target):
+    case /(class|enum|interface)+/g.test(target):
       /**
        * ClassName
        */
-      let classFiltered = utils.splitLine(target);
+      let className: RegExpMatchArray | null = target.match(/(class|enum|interface)\s+([\w_-]+)+/);
       phpdoc = `\n/**`;
-      phpdoc += `\n * ${utils.clearSpecialCharacters(classFiltered[1])}`;
+      phpdoc += `\n * ${utils.clearSpecialCharacters(className ? className[2] : "unnamed")}`;
       phpdoc += `\n */`;
       break;
 

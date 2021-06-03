@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
@@ -39,6 +39,12 @@
 				"title": "PHP IDE: Add PHPDoc Comment"
 			}
 		],
+		"keybindings": [
+            {
+                "command": "php-ide.addPhpDoc",
+                "key": "ctrl+shift+i"
+            }
+        ],
 		"menus": {
             "editor/context": [{
                 "when": "resourceLangId == php",

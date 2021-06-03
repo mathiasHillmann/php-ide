@@ -19,7 +19,7 @@ function registerDocumentProvider(document: vscode.TextDocument, options: vscode
         });
     } catch (err) {
       console.log(err);
-      vscode.window.showErrorMessage(err);
+      vscode.window.showErrorMessage(err.message);
     }
   });
 }
@@ -30,7 +30,6 @@ export function activate(context: vscode.ExtensionContext) {
   /*
    *  php-cs-fixer
    */
-
   const fixCommand = vscode.commands.registerTextEditorCommand("php-ide.fix", function (textEditor) {
     vscode.commands.executeCommand("editor.action.formatDocument");
   });
@@ -51,13 +50,16 @@ export function activate(context: vscode.ExtensionContext) {
     },
   });
 
+  /*
+   * PHPDoc
+   */
   const phpDocCommand = vscode.commands.registerCommand("php-ide.addPhpDoc", function () {
     if (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document.languageId === "php") {
       try {
         phpDoc(vscode.window.activeTextEditor);
       } catch (err) {
         console.log(err);
-        vscode.window.showErrorMessage(err);
+        vscode.window.showErrorMessage(err.message);
       }
     }
   });

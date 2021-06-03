@@ -41,3 +41,8 @@ Fixed the extension path when running the extension
 ## 0.2.0
 
 * Added PHPDoc to the extension.
+
+## 0.2.1
+
+* Fixed some issues with properties and functions without returns specified would not function.
+* Added shortcut ctrl+shift+i to generate phpdoc.
