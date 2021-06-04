@@ -46,3 +46,7 @@ Fixed the extension path when running the extension
 
 * Fixed some issues with properties and functions without returns specified would not function.
 * Added shortcut ctrl+shift+i to generate phpdoc.
+
+## 0.2.2
+
+* Fixed a issue where properties would only have one letter in their phpdoc

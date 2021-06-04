@@ -1,5 +1,7 @@
 # PHP IDE
 
+[![Version](https://img.shields.io/vscode-marketplace/v/mhillmann.php-ide.svg?label=Version)](https://marketplace.visualstudio.com/items?itemName=mhillmann.php-ide) [![Downloads](https://img.shields.io/vscode-marketplace/d/mhillmann.php-ide.svg)](https://marketplace.visualstudio.com/items?itemName=mhillmann.php-ide) [![Rating](https://img.shields.io/vscode-marketplace/r/mhillmann.php-ide.svg)](https://marketplace.visualstudio.com/items?itemName=mhillmann.php-ide)
+
 Overcharge your Vscode and turn it into a proper PHP IDE.
 
 ## Features

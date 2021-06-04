@@ -55,7 +55,7 @@ export function phpDoc(editor: vscode.TextEditor) {
        * @var type VarName
        */
       let varType: RegExpMatchArray | null = target.match(/([\w_-]+)\s+\$[\w_-]+/);
-      let varName: RegExpMatchArray | null = target.match(/(\$[\w_-])+/);
+      let varName: RegExpMatchArray | null = target.match(/(\$[\w_-]+)+/);
       phpdoc = `\n/**`;
       phpdoc += `\n * @var ${!varType ? "mixed" : /(public|private|protected|var)+/g.test(varType[1]) ? "mixed" : varType[1]} ${
         varName ? varName[1] : "unnamed"
