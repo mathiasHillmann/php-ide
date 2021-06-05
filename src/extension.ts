@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
   const fixOnSave = vscode.workspace.onWillSaveTextDocument(function (event) {
     if (
       event.document.languageId === "php" &&
-      utils.getConfig("fixOnSave") &&
+      utils.getConfig("php-cs-fixer.fixOnSave") &&
       vscode.workspace.getConfiguration("editor", null).get("formatOnSave") === false
     ) {
       event.waitUntil(vscode.commands.executeCommand("editor.action.formatDocument"));

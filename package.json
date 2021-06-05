@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
