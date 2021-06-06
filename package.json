@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
@@ -13,7 +13,9 @@
 		"name": "Mathias Hillmann"
 	},
 	"categories": [
-		"Formatters"
+		"Formatters",
+		"Other",
+		"Linters"
 	],
 	"galleryBanner": {
 		"color": "#1e1e1e",
@@ -22,7 +24,9 @@
 	"keywords": [
 		"PHP",
 		"Code Sniffer",
-		"IDE"
+		"IDE",
+		"php-cs-fixer",
+		"PHPDoc"
 	],
 	"activationEvents": [
 		"onLanguage:php"
