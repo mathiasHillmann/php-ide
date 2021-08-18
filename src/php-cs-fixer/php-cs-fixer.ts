@@ -6,7 +6,28 @@ import * as cp from "child_process";
 import { ExecException } from "node:child_process";
 import * as utils from "../utils";
 
-export function formatDocument(document: vscode.TextDocument): Promise<string> {
+export function registerDocumentProvider(document: vscode.TextDocument) {
+  return new Promise<vscode.TextEdit[]>(function (resolve, reject) {
+    try {
+      formatDocument(document)
+        .then(function (text: string) {
+          const range = new vscode.Range(new vscode.Position(0, 0), document.lineAt(document.lineCount - 1).range.end);
+          resolve([new vscode.TextEdit(range, text)]);
+        })
+        .catch(function (err: Error) {
+          vscode.window.showErrorMessage(err.message);
+          reject();
+        });
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err);
+        vscode.window.showErrorMessage(err.message);
+      }
+    }
+  });
+}
+
+function formatDocument(document: vscode.TextDocument): Promise<string> {
   if (document.languageId !== "php") {
     throw new Error("This command requires that the language is PHP.");
   }
@@ -56,7 +77,7 @@ export function formatDocument(document: vscode.TextDocument): Promise<string> {
   return new Promise<string>(function (resolve) {
     cp.execFile("php", [...args, tmpFile.name], opts, function (err: ExecException | null, stdout: string, stderr: string) {
       if (err) {
-        console.log([err, stdout, stderr]);
+        console.error([err, stdout, stderr]);
         tmpFile.removeCallback();
         throw new Error(`${err.message}: ${stderr}`);
       }

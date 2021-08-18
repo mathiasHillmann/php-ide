@@ -2,9 +2,6 @@
 .vscode-test/**
 node_modules
 readme
-vendor
-composer.json
-composer.lock
 tsconfig.json
 out/test/**
 src/**
@@ -15,4 +12,4 @@ vsc-extension-quickstart.md
 **/.eslintrc.json
 **/*.map
 **/*.ts
-.php_cs.cache
+.php-cs-fixer.cache

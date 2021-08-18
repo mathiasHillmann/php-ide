@@ -25,7 +25,3 @@ export function splitLineComma(line: string): Array<string> {
 export function clearSpecialCharacters(s: string): String {
   return s.replace(/[\W_]+/g, "");
 }
-
-export function uppercaseFirstCharacter(s: string): String {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
