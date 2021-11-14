@@ -1,21 +1,31 @@
-import * as vscode from "vscode";
-import * as path from "path";
+import { join } from "path";
+import { workspace } from "vscode";
 
 export function getConfig(key: string): string {
   // @ts-ignore
-  return vscode.workspace.getConfiguration("php-ide").get(key);
+  return workspace.getConfiguration("php-ide").get(key);
+}
+
+export function getPhpPath(): string {
+  const phpKey = workspace.getConfiguration("php.validate");
+  if (phpKey) {
+    const path = phpKey.get("executablePath");
+    if (path && typeof path === "string") {
+      return path;
+    }
+  }
+
+  throw new Error(
+    'This extension requires PHP. Please set the setting "php.validate.executablePath" in your settings.json'
+  );
 }
 
 export function getExtensionPath(): string {
-  return path.join(__dirname, "..");
+  return join(__dirname, "..");
 }
 
 export function wordCount(line: string): Number {
   return line.split(" ").filter((a) => a !== "").length;
-}
-
-export function splitLineComma(line: string): Array<string> {
-  return line.split(",").filter((a) => a !== "");
 }
 
 export function clearSpecialCharacters(s: string): String {

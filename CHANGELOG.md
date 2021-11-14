@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.2.4
+
+* Changed php-cs-fixer default rules to "@Symfony,@PSR12"
+* Fixed issue where creating PHPDoc on functions with parameters with default values
+
 ## 0.2.3
 
 * Fixed a issue where php-cs-fixer wouldn't run when "Fix on Save" was selected.

@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
@@ -31,7 +31,7 @@
 	"activationEvents": [
 		"onLanguage:php"
 	],
-	"main": "./out/main.js",
+	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
@@ -72,7 +72,7 @@
 				},
 				"php-ide.php-cs.rules": {
 					"type": "string",
-					"default": "@PSR1,@PSR2",
+					"default": "@Symfony,@PSR12",
 					"description": "Rules to use when fixing files (--rules)"
 				},
 				"php-ide.php-cs-fixer.fixOnSave": {
@@ -84,13 +84,13 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run -S esbuild-base -- --minify",
+		"vscode:prepublish": "rm -rf out && npm run -S esbuild-base -- --minify",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js",
-    	"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node"
+    	"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
