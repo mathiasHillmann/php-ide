@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.6
+* Fixed a issue where the extension could not find PHP
+
 ## 0.2.4
 
 * Changed php-cs-fixer default rules to "@Symfony,@PSR12"

@@ -3,7 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, normalize, sep } from "path";
 import { fileSync } from "tmp";
 import { commands, languages, Range, TextDocument, TextEdit, workspace, Position, window } from "vscode";
-import { getConfig, getExtensionPath, getPhpPath } from "../utils";
+import { getConfig, getExtensionPath } from "../utils";
 
 export class PhpCsFixer {
   public command = commands.registerTextEditorCommand("php-ide.fix", function (textEditor) {
@@ -94,7 +94,7 @@ export class PhpCsFixer {
 
     return new Promise<string>((resolve): void => {
       execFile(
-        getPhpPath(),
+        global.phpPath,
         [...args, tmpFile.name],
         opts,
         function (err: ExecException | null, stdout: string, stderr: string) {
