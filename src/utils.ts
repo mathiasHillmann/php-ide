@@ -1,6 +1,6 @@
 import { exec, ExecException } from "child_process";
 import { join } from "path";
-import { AST, Node, Program } from "php-parser";
+import { Engine, Node, Program, Identifier } from "php-parser";
 import { lt } from "semver";
 import { TextDocument, workspace, Range, window, commands } from "vscode";
 
@@ -13,15 +13,15 @@ export function getExtensionPath(): string {
   return join(__dirname, "..");
 }
 
-export function wordCount(line: string): Number {
+export function wordCount(line: string): number {
   return line.split(" ").filter((a) => a !== "").length;
 }
 
-export function clearSpecialCharacters(s: string): String {
+export function clearSpecialCharacters(s: string): string {
   return s.replace(/[\W_]+/g, "");
 }
 
-export function uppercaseFirstCharacter(s: string): String {
+export function uppercaseFirstCharacter(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
@@ -75,23 +75,57 @@ export function setPhpVersion(): void {
   });
 }
 
-export function treeWalk(nodes: Node[], needle: string): Node | undefined {
-  let returnNode;
-  nodes.every((node) => {
-    console.log(node);
-    // @ts-ignore
-    if (node.hasOwnProperty("name") && node.name.name === needle) {
-      returnNode = node;
-    } else {
-      if (node.hasOwnProperty("children")) {
-        // @ts-ignore
-        returnNode = treeWalk(node.children, needle);
-      } else if (node.hasOwnProperty("body")) {
-        // @ts-ignore
-        returnNode = treeWalk(node.body, needle);
+export function treeWalk(nodes: any[], needle: string): Node | undefined {
+  let nodeFound: Node | undefined;
+
+  if (Array.isArray(nodes)) {
+    for (const node of nodes) {
+      if (node.name && getIdentifierName(node.name) === needle) {
+        return node;
+      } else {
+        for (const key in node) {
+          if (Array.isArray(node[key]) && node[key].length > 0) {
+            nodeFound = treeWalk(node[key], needle);
+          }
+
+          if (nodeFound) {
+            break;
+          }
+        }
+      }
+
+      if (nodeFound) {
+        break;
       }
     }
+  }
+
+  return nodeFound;
+}
+
+export function parseDocument(document: TextDocument): Program | undefined {
+  const parser = new Engine({
+    parser: {
+      extractDoc: true,
+    },
+    ast: {
+      withPositions: true,
+    },
   });
 
-  return returnNode;
+  try {
+    return parser.parseCode(document.getText(), "foo.php");
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Unable to parse php code: ${error.message}`);
+    }
+  }
+}
+
+export function getIdentifierName(identifier: string | Identifier): string {
+  if (typeof identifier === "string") {
+    return identifier;
+  } else {
+    return identifier.name;
+  }
 }

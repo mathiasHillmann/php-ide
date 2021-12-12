@@ -1,6 +1,7 @@
 import { ExecException, execFile } from "child_process";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, normalize, sep } from "path";
+import { lt } from "semver";
 import { fileSync } from "tmp";
 import { commands, languages, Range, TextDocument, TextEdit, workspace, Position, window } from "vscode";
 import { getConfig, getExtensionPath } from "../utils";
@@ -56,7 +57,15 @@ export class PhpCsFixer {
     let opts = { cwd: dirname(filename) };
 
     if (toolPath === "") {
-      toolPath = normalize(`${getExtensionPath()}/tools/php-cs-fixer`);
+      try {
+        if (lt(global.phpVersion, "7.2.0")) {
+          toolPath = normalize(`${getExtensionPath()}/tools/php-cs-fixer-v2`);
+        } else {
+          toolPath = normalize(`${getExtensionPath()}/tools/php-cs-fixer-v3`);
+        }
+      } catch (error) {
+        throw new Error("Unable to get PHP's version.");
+      }
     }
 
     args.push(toolPath);
@@ -92,7 +101,7 @@ export class PhpCsFixer {
     const tmpFile = fileSync();
     writeFileSync(tmpFile.name, document.getText());
 
-    return new Promise<string>((resolve): void => {
+    return new Promise<string>((resolve, reject): void => {
       execFile(
         global.phpPath,
         [...args, tmpFile.name],
@@ -101,7 +110,7 @@ export class PhpCsFixer {
           if (err) {
             console.log([err, stdout, stderr]);
             tmpFile.removeCallback();
-            throw new Error(`${err.message}: ${stderr}`);
+            reject(`${err.message}: ${stderr}`);
           }
           const text = readFileSync(tmpFile.name, "utf-8");
           tmpFile.removeCallback();
