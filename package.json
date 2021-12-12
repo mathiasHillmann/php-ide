@@ -2,7 +2,7 @@
 	"name": "php-ide",
 	"displayName": "PHP IDE",
 	"description": "Turn your vscode into a proper PHP IDE.",
-	"version": "0.2.7",
+	"version": "0.2.8",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"icon": "images/icon.png",
 	"engines": {
@@ -74,7 +74,7 @@
 				},
 				"php-ide.php-cs.rules": {
 					"type": "string",
-					"default": "@Symfony,@PSR12",
+					"default": "@Symfony,@PSR12,-yoda_style",
 					"description": "Rules to use when fixing files (--rules)"
 				},
 				"php-ide.php-cs-fixer.fixOnSave": {

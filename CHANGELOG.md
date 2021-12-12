@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.8
+* Added '-yoda_style' to the default formatter rules
+
 ## 0.2.7
 * Fix for issue #3
 
