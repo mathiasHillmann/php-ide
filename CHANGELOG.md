@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.7
+* Fix for issue #3
+
 ## 0.2.6
 * Fixed a issue where the extension could not find PHP
 
